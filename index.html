@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Roguelike! Infinity</title>
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="roguelike.css" />
+    <style>
+      /* Title screen styling – adjust as needed */
+      #titleScreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: url("background.webp") no-repeat center center;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+      #titleScreen h1 {
+        font-size: 48px;
+        margin-bottom: 20px;
+      }
+      #titleScreen .subheading {
+        font-size: 24px;
+        margin-bottom: 10px;
+        text-align: center;
+        max-width: 80%;
+      }
+      #titleScreen .subsubheading {
+        font-size: 18px;
+        margin-bottom: 30px;
+      }
+      #titleScreen button {
+        padding: 10px 20px;
+        font-size: 20px;
+        background: #555;
+        border: none;
+        color: white;
+        cursor: pointer;
+      }
+      #titleScreen button:hover {
+        background: #777;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Title Screen -->
+    <div id="titleScreen">
+  <div id="titleBox">
+    <h1>Roguelike! Infinity<br> Alpha 1.7.8</h1>
+    <p>
+      Journey through an infinite dungeon, get stronger, grind for new equipment, fight your way through endless waves of monsters, and battle gods!
+    </p>
+    <h5>
+      Personal Project by: Gabriel A. Barabar
+    </h5>
+    <button id="playButton" style="display: none;">Begin Journey!</button>
+	<h6>
+	  (Press the screen to play!)
+	</h6>
+  </div>
+</div>
+
+<audio id="titleMusic" src="fire.mp3" loop></audio>
+
+    <!-- Game Container (initially hidden until play button is pressed) -->
+    <div id="gameContainer" style="display: none;">
+      <div id="worldCounter"></div>
+	  <!-- Mission Display (HUD) -->
+<div id="missionDisplay" style="position: fixed; top: 10px; right: 10px; background: rgba(0,0,0,0.5); padding: 5px 10px; border-radius: 5px; font-size: 18px; color: white;"></div>
+      <!-- Dynamic Map -->
+      <div id="map"></div>
+      <!-- Stats Panel -->
+      <div id="stats">
+        <div id="playerLevel">Player Level: 1</div>
+        <div class="barContainer"> HP: <span id="hpText">100/100</span>
+          <div class="hpBar">
+            <div class="hpBarInner" id="hpBarInner"></div>
+          </div>
+        </div>
+        <div class="barContainer"> EXP: <span id="expText">0/5</span>
+          <div class="expBar">
+            <div class="expBarInner" id="expBarInner"></div>
+          </div>
+        </div>
+        <br>
+        <div id="statsText"> Attack: <span id="attackStat">100</span>&nbsp; Defense: <span id="defenseStat">100</span>&nbsp; Magic: <span id="magicStat">3</span>&nbsp; Money: <span id="moneyStat">1000</span>
+          <br> Agility: <span id="agilityStat">1</span>&nbsp; Perception: <span id="perceptionStat">1</span>&nbsp; Potential: <span id="potentialStat">1</span>
+        </div> Inventory: <div id="inventorySlots">
+          <div class="inventorySlot"></div>
+          <div class="inventorySlot"></div>
+          <div class="inventorySlot"></div>
+          <div class="inventorySlot"></div>
+          <div class="inventorySlot"></div>
+          <div class="inventorySlot"></div>
+          <div class="inventorySlot"></div>
+          <div class="inventorySlot"></div>
+          <div class="inventorySlot"></div>
+          <div class="inventorySlot"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Battle Tint -->
+    <div id="battleTint"></div>
+    <!-- Battle Menu -->
+    <div id="battleMenu">
+      <div id="enemyInfo"></div>
+      <div id="battleOptions">
+        <button id="attackBtn">Attack</button>
+        <button id="magicBtn">Magic</button>
+        <button id="itemsBtn">Items</button>
+        <button id="runBtn">Run</button>
+      </div>
+    </div>
+    <!-- Battle Log -->
+    <div id="battleLog"></div>
+    <!-- Inventory Menu -->
+    <div id="inventoryMenu"></div>
+    <!-- Level Up Menu -->
+    <div id="levelUpMenu">
+      <h3>Level Up! Choose a stat to increase:</h3>
+      <button data-stat="hp">HP</button>
+      <button data-stat="attack">Attack</button>
+      <button data-stat="defense">Defense</button>
+      <button data-stat="magic">Magic</button>
+      <button data-stat="agility">Agility</button>
+      <button data-stat="perception">Perception</button>
+      <button data-stat="potential">Potential</button>
+    </div>
+    <!-- Shop Menu -->
+    <div id="shopMenu">
+      <h3>Shop</h3>
+      <div id="shopItems"></div>
+      <button id="closeShopBtn">Close</button>
+    </div>
+    <!-- Death Menu -->
+    <div id="deathMenu">
+      <h3>You died!</h3>
+      <button id="retryBtn">Retry</button>
+    </div>
+    <!-- Casino Menu -->
+    <div id="casinoMenu">
+      <h3>CASINO</h3>
+      <div>
+        <strong>Enemy:</strong>
+        <span id="casinoEnemyTotal">0</span>
+        <br />
+        <strong>Player:</strong>
+        <span id="casinoPlayerTotal">0</span>
+      </div>
+      <div>
+        <label for="betInput">Bet money:</label>
+        <input type="number" id="betInput" min="1" value="1" />
+        <button id="placeBetBtn">Place Bet</button>
+      </div>
+      <div id="casinoGameArea" style="display: none;">
+        <div class="cardButtons">
+          <button class="hitBtn">Hit</button>
+          <button class="hitBtn">Hit</button>
+          <button class="hitBtn">Hit</button>
+          <button class="hitBtn">Hit</button>
+        </div>
+        <button class="smallButton" id="standBtn">Stand</button>
+      </div>
+    </div>
+    <!-- Link to external JavaScript -->
+    <script src="roguelike.js"></script>
+    <script>
+      // Simple title screen functionality
+      document.getElementById("playButton").addEventListener("click", function () {
+        document.getElementById("titleScreen").style.display = "none";
+        document.getElementById("gameContainer").style.display = "block";
+        // Optionally, initialize your game here (e.g., initGame())
+      });
+    </script>
+  </body>
+</html>
