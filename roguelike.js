@@ -1288,13 +1288,13 @@ casinoMusic.loop = true;
             allowed = ["Ghoul"];
             break;
           case "Omni":
-            allowed = ["Goblin", "Zombie", "Skeleton", "Golem", "Monster Crow", "Wolf", "Ghoul", "Giant Spider", "Demon Bat", "Giant Scorpion", "Ice Golem", "Ice Spirit", "Piranha", "Shark", "Giant Albatross", "Vulture", "Sandworm", "Possessed Armor", "Bear"];
+            allowed = ["Goblin", "Zombie", "Skeleton", "Golem", "Monster Crow", "Wolf", "Ghoul", "Giant Spider", "Demon Bat", "Giant Scorpion", "Ice Golem", "Ice Spirit", "Piranha", "Shark", "Giant Albatross", "Vulture", "Sandworm", "Possessed Armor", "Bear", "Drone", "Cyborg Guard", "Giant Robot", "Shikigami", "Sorcerer", "Cursed Spirit"];
             break;
 	  case "King God General Emperor, Supreme Divine Entity of Ultimacy, Archangel & Creator, Gabriel":
-            allowed = ["Goblin King", "Mutant Zombie", "Giant Lord", "Skeleton King", "Spider Queen", "The Witch", "Titan Golem", "Wyvern", "Giant Sandworm", "Titanoboa Lord", "Abominable Snowman", "Omegalodon", "Leviathan", "Angel", "Mega Meta Mecha Annihilator - Model: Ultima", "Grand Knight", "Six-Eyed Calamity", "Dragon King", "The Black King", "Omni", ];
+            allowed = ["Goblin King", "Mutant Zombie", "Giant Lord", "Skeleton King", "Spider Queen", "The Witch", "Titan Golem", "Wyvern", "Giant Sandworm", "Titanoboa Lord", "Abominable Snowman", "Omegalodon", "Leviathan", "Angel", "Mega Meta Mecha Annihilator - Model: Ultima", "Grand Knight", "Six-Eyed Calamity", "Dragon King", "The Black King", "Omni"];
             break;
           default:
-            allowed = ["Goblin", "Zombie", "Skeleton", "Golem"];
+            allowed = ["Goblin", "Zombie", "Skeleton", "Golem", "Monster Crow", "Wolf", "Ghoul", "Giant Spider", "Demon Bat", "Giant Scorpion", "Ice Golem", "Ice Spirit", "Piranha", "Shark", "Giant Albatross", "Vulture", "Sandworm", "Possessed Armor", "Bear", "Drone", "Cyborg Guard", "Giant Robot", "Shikigami", "Sorcerer", "Cursed Spirit"];
         }
         return enemies.filter(e => allowed.includes(e.name));
       }
@@ -2846,7 +2846,7 @@ function hideOverlay() {
 	  function handleTrapRoom() {
   // 67% chance it doesn’t go off
   if (Math.random() < 0.67) {
-    logBattle("You sense something… but the trap doesn’t trigger.");
+    logBattle("You sense something's off… but nothing happens.");
     return;
   }
 
@@ -2858,9 +2858,9 @@ function hideOverlay() {
   // if it was a disguised trap, only 1/3 damage
   if (map[ player.x + "_" + player.y ].disguisedTrap) {
     damage = Math.floor(damage / 3);
-    logBattle("A hidden trap! You take reduced damage.");
+    logBattle("You fell into a trap!");
   } else {
-    logBattle("You triggered a trap!");
+    logBattle("You stepped on a trap!");
   }
 
   player.hp = Math.max(player.hp - damage, 0);
