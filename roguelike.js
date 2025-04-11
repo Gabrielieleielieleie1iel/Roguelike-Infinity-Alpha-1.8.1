@@ -2119,9 +2119,9 @@ function getEnemyByName(enemyName) {
           }
         }
         if (isCritical) {
-          logBattle(`Player attacked and dealt ${damage} damage. (Critical Hit!)`);
+          logBattle(`Player attacked and dealt ${damage} critical damage!`);
         } else if (resisted) {
-          logBattle(`Player ${moveType === "attack" ? "attacked" : "cast magic"} and dealt ${damage} damage. (Reduced)`);
+          logBattle(`Player ${moveType === "attack" ? "attacked" : "cast magic"} and dealt ${damage} resisted damage.`);
         } else {
           logBattle(`Player ${moveType === "attack" ? "attacked" : "cast magic"} and dealt ${damage} damage.`);
         }
@@ -2184,7 +2184,7 @@ function getEnemyByName(enemyName) {
         player.hp -= enemyDamage;
         if (player.hp < 0) player.hp = 0;
         if (enemyCritical) {
-          logBattle(`${currentEnemy.name} attacked and dealt ${enemyDamage} damage. (Critical Hit!)`);
+          logBattle(`${currentEnemy.name} attacked and dealt ${enemyDamage} critical damage!`);
         } else {
           logBattle(`${currentEnemy.name} attacked and dealt ${enemyDamage} damage.`);
         }
