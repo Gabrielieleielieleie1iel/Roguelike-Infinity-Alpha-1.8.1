@@ -2540,7 +2540,7 @@ function getEnemyByName(enemyName) {
       function levelUp() {
         player.level += 1;
         player.exp -= player.expToLevel;
-        player.expToLevel += Math.round(Math.pow(5, 1 + player.level * 0.008));
+        player.expToLevel += Math.round(Math.pow(10, 1 + (player.level * 0.008)));
         updateStats();
         let currentRoomType = map[player.x + "_" + player.y].type;
         upgradesRemaining = (currentRoomType === ROOM_TYPES.ALTAR ? 3 : 1);
